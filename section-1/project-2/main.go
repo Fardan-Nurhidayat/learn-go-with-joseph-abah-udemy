@@ -12,20 +12,19 @@ const (
 
 func (u UserLevel) String() string {
 	switch u {
-	case Basic: 
+	case Basic:
 		return "User level: Basic \n Akses: Limit Akses"
-	case Premium: 
+	case Premium:
 		return "User Level: Premium \n Akses: Premium Akses"
-	case VIP: 
+	case VIP:
 		return "User Level: VIP \n Akses: VIP Akses"
-	default: 
+	default:
 		return "unkown"
 	}
 }
 
-
 func main() {
-	level :=Basic
+	level := Basic
 
 	fmt.Println(level)
 }

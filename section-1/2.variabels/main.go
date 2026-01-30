@@ -2,22 +2,21 @@ package main
 
 import "fmt"
 
-func main(){
+func main() {
 	var greeting string
 
 	greeting = "Hello World"
 
 	fmt.Println(greeting)
 
+	var count int
 
-	var count int 
-
-	count = 10 
+	count = 10
 
 	fmt.Println(count)
 
-	var isRunning bool 
-	isRunning = true 
+	var isRunning bool
+	isRunning = true
 
 	fmt.Println(isRunning)
 

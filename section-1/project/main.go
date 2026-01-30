@@ -23,7 +23,7 @@ func (l LogLevel) String() string {
 }
 
 func printLogLevel(level LogLevel) {
-	fmt.Printf("Log Level: %d %s\n" , level , level.String())
+	fmt.Printf("Log Level: %d %s\n", level, level.String())
 }
 
 func main() {
