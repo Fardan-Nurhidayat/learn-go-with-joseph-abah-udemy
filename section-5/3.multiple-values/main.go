@@ -3,58 +3,106 @@ package main
 import (
 	"errors"
 	"fmt"
-	"time"
 )
 
-var ErrDivisionByZero = errors.New("division by zero")
-var ErrNumTooLarge = errors.New("number too large")
-
-type OpError struct {
-	Op      string
-	Code    int
-	Message string
-	Time    time.Time
+type Users struct {
+	ID   int
+	Name string
+	Age  int
 }
 
-func (op OpError) Error() string {
-	return op.Message
+var users []Users
+var userIndexByName map[string]int
+
+func init() {
+	users = make([]Users, 0)
+	userIndexByName = make(map[string]int)
 }
-func NewOpError(op string, code int, message string, t time.Time) *OpError {
-	return &OpError{
-		Op:      op,
-		Code:    code,
-		Message: message,
-		Time:    t,
+
+func calculateStats(numbers []int) (int, int, float64) {
+	if len(numbers) == 0 {
+		return 0, 0, 0.0
 	}
+
+	sum := 0
+	for _, num := range numbers {
+		sum += num
+	}
+
+	avg := float64(sum) / float64(len(numbers))
+	max := numbers[0]
+
+	for _, num := range numbers {
+		if num > max {
+			max = num
+		}
+	}
+
+	return sum, max, avg
 }
 
-func DoSomething() error {
-	return NewOpError("doSomething", 100, "do something failed", time.Now())
+func substract(a, b uint) (result uint) {
+	result = a * b
+	return
 }
 
 func divide(a, b int) (int, error) {
 	if b == 0 {
-		return 0, ErrDivisionByZero
+		return 0, errors.New("division by zero")
 	}
-
-	if a > 1000 {
-		return 0, ErrNumTooLarge
-	}
-
 	return a / b, nil
 }
 
-func main() {
-
-	value, err := divide(1001, 1)
-	if err != nil {
-		if errors.Is(err, ErrDivisionByZero) {
-			fmt.Println("divide by zero")
-		} else if errors.Is(err, ErrNumTooLarge) {
-			fmt.Println("number too large")
-		}
-		return
+func addUser(name string, age int) Users {
+	newUser := Users{
+		ID:   len(users) + 1,
+		Name: name,
+		Age:  age,
 	}
+	users = append(users, newUser)
+	userIndexByName[name] = len(users) - 1
+	return newUser
+}
 
-	fmt.Println(value)
+func findUser(name string) (*Users, error) {
+	index, exists := userIndexByName[name]
+	if exists {
+		return &users[index], nil
+	}
+	return nil, fmt.Errorf("user not found: %s", name)
+}
+
+func main() {
+	// numbers := []int{10, 20, 30, 40, 50}
+	// total, maximum, average := calculateStats(numbers)
+	// fmt.Printf("Total: %d, Maximum: %d, Average: %.2f\n", total, maximum, average)
+
+	// fmt.Println("=======================")
+	// result := substract(10, 5)
+	// fmt.Printf("Result: %d\n", result)
+
+	// fmt.Println("===========================")
+	// divResult, err := divide(10, 2)
+	// if err != nil {
+	// 	fmt.Println("Error:", err)
+	// } else {
+	// 	fmt.Printf("Division Result: %d\n", divResult)
+	// }
+
+	fmt.Println("===========================")
+	fmt.Println(users)
+
+	fmt.Println("=======================")
+	addUser("Alice", 30)
+	addUser("Bob", 30)
+
+	fmt.Println("======================")
+	fmt.Println(users)
+
+	user, err := findUser("LUtfi")
+	if err != nil {
+		fmt.Println("Error:", err)
+	} else {
+		fmt.Printf("Found User: %+v\n", *user)
+	}
 }
