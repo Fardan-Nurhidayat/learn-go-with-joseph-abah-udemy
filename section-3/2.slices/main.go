@@ -28,8 +28,24 @@ func main() {
 	fmt.Println("======================================")
 	s := make([]int, 0, 5)
 
-	for i := 0; i < 20; i++ {
-		s = append(s, i)
-		fmt.Println(len(s), cap(s))
+	s = append(s, 10)
+	s = append(s, 20)
+	s = append(s, 30)
+	s = append(s, 40)
+	s = append(s, 50)
+	s = append(s, 60)
+	fmt.Println(s)
+	fmt.Println(len(s), cap(s))
+
+	fmt.Println("=============================")
+	groups := []string{"A", "B", "C", "D", "E", "F"}
+	fmt.Println(groups)
+	groups = append(groups, "G", "H", "I", "J", "K")
+	fmt.Println(groups)
+
+	fmt.Println("==================")
+	result := make([]int, 0, 1000) // Preallocate capacity
+	for i := 0; i < 1000; i++ {
+		result = append(result, i) // Minimal reallocation
 	}
 }
