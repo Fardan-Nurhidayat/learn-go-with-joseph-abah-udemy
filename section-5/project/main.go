@@ -74,17 +74,75 @@ func findTodoByTitle(title string) (*Todo, error) {
 	return nil, fmt.Errorf("Title not found: %s", title)
 }
 
+func updateStatus(title string, status Status) (*Todo, error) {
+	index, exists := todoIndexByTitle[title]
+	if !exists {
+		return nil, ErrorNotFound
+	}
+	if !cekStatus(status) {
+		return nil, fmt.Errorf("invalid status: %s", status)
+	}
+	todos[index].Status = status
+	return &todos[index], nil
+}
+
+func deleteTodo(title string) (*Todo, error) {
+	index, exists := todoIndexByTitle[title]
+	if !exists {
+		return nil, ErrorNotFound
+	}
+	last := len(todos) - 1
+	todos[index] = todos[last]
+	todoIndexByTitle[todos[index].Title] = index
+	todos = todos[:last]
+	delete(todoIndexByTitle, title)
+	return &todos[index], nil
+
+}
+
 func main() {
 	fmt.Println(todos)
-	todo, err := addTodo("Re", "Reading book", planning)
-
+	todo, err := addTodo("Read Book", "Reading book", planning)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	todo1, err := addTodo("Go Lang", "Learn Go Language", ongoing)
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
 	}
 
 	fmt.Println("Todo added:", todo)
-
+	fmt.Println("Todo Added", todo1)
 	fmt.Println("======== List Todo ==========")
+	fmt.Println(todos)
+
+	fmt.Println("=========== Search Todo ============")
+	foundTodo, err := findTodoByTitle("Read Book")
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	fmt.Println("Found Todo:", foundTodo)
+
+	fmt.Println("=========== Update Status =============")
+	updatedTodo, err := updateStatus("Read Book", ongoing)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	fmt.Println("Updated Todo:", updatedTodo)
+	fmt.Println("======== Final List Todo ==========")
+	fmt.Println(todos)
+
+	fmt.Println("=========== Delete Todo =============")
+	deletedTodo, err := deleteTodo("Read Book")
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	fmt.Println("Deleted Todo:", deletedTodo)
+	fmt.Println("======== Final List Todo ==========")
 	fmt.Println(todos)
 }
