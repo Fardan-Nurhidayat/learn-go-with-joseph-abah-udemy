@@ -3,26 +3,48 @@ package main
 import "fmt"
 
 func main() {
-	words := []string{"go", "php", "go", "java", "go", "php"}
-	wordCount := make(map[string]uint8)
+	// Map adalah kumpulan pasangan key-value
+	// Map adalah unordered collection
+	// Map adalah mutable
+	// Map adalah reference type
+	// Map adalah unordered collection
+	// Map adalah unordered collection
 
-	for _, word := range words {
-		wordCount[word]++
-	}
-	for word, count := range wordCount {
-		fmt.Println(word, count)
-	}
+	// Cara membuat map
+	// dengan opsi make
+	mapExample := make(map[string]string)
+	mapExample["name"] = "John"
+	mapExample["age"] = "30"
+	mapExample["city"] = "New York"
+	fmt.Println(mapExample)
 
-	studentGrades := map[string]int{
-		"Alice": 90,
-		"James": 85,
-		"Dan":   60,
+	// dengan opsi literal
+	mapExample2 := map[string]string{
+		"name": "John",
+		"age":  "30",
+		"city": "New York",
 	}
-	fmt.Printf("%+v\n", studentGrades)
+	fmt.Println(mapExample2)
 
-	var configs = make(map[string]string)
-	if configs == nil {
-		fmt.Println("config is nil, initializing map")
+	// Cara mengakses map
+	fmt.Println(mapExample["name"])
+	fmt.Println(mapExample["age"])
+	fmt.Println(mapExample["city"])
+
+	// Cara menghapus map
+	delete(mapExample, "name")
+	fmt.Println(mapExample)
+
+	// Cara mengecek apakah map kosong
+	fmt.Println(len(mapExample))
+
+	// Cara mengecek apakah key ada di map
+	_, ok := mapExample["name"]
+	fmt.Println(ok)
+
+	// Cara iterasi map
+	for key, value := range mapExample {
+		fmt.Println(key, value)
 	}
 
 }

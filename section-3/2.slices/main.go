@@ -5,47 +5,60 @@ import (
 )
 
 func main() {
-	names := []string{"Alice", "Bob", ""}
-	kelas := make([]string, 2, 5)
-	kelas = append(kelas, "Charlie")
-	kelas = append(kelas, "David")
+	// Contoh slice dengan mendefinisikan secara langsung
+	sliceExample := []string{"Alice", "Bob", "Charlie"}
+	fmt.Println(sliceExample)
 
-	names = append(names, "Lutfi", "Ivan", "Arif")
-	fmt.Printf("%+v\n", names)
+	// Contoh slice dengan mendefiniskannya dengan make
+	// Parameter pertama adalah tipe data, parameter kedua adalah panjang slice, parameter ketiga adalah kapasitas
+	sliceExample2 := make([]string, 3)
+	sliceExample2[0] = "Alice"
+	sliceExample2[1] = "Bob"
+	sliceExample2[2] = "Charlie"
+	fmt.Println(sliceExample2)
 
-	fmt.Println(len(names))
-	fmt.Println(cap(names))
+	// Contoh slice jika mendefinisikan panjang dan kapasitas
+	// Kapasitas sendiri akan berfungsi untuk mengalokasikan memori sebelumnya
+	// Jadi jika panjang slice lebih dari kapasitas, maka akan terjadi realokasi memori
+	// Namun, jika panjang slice kurang dari kapasitas, maka tidak akan terjadi realokasi memori
+	// Hal ini akan mempengaruhi performa program , maka sebaiknya mendefinisikan kapasitas sesuai dengan kebutuhan
+	sliceExample3 := make([]string, 3, 5)
+	sliceExample3[0] = "Alice"
+	sliceExample3[1] = "Bob"
+	sliceExample3[2] = "Charlie"
+	fmt.Println(sliceExample3)
+	fmt.Printf("Length: %d, Capacity: %d\n", len(sliceExample3), cap(sliceExample3))
 
-	bil1 := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-	bil2 := []int{11, 12, 13, 14, 15}
+	// Contoh slice dengan append
+	sliceExample4 := []string{"Alice", "Bob", "Charlie"}
+	sliceExample4 = append(sliceExample4, "David")
+	fmt.Println(sliceExample4)
+	fmt.Println("Contoh jika tanpa mendefinisikan kapasitas")
+	fmt.Printf("Length: %d, Capacity: %d\n", len(sliceExample4), cap(sliceExample4))
 
-	bil1 = append(bil1, bil2...)
-	fmt.Printf("%+v\n", bil1)
+	// Contoh slice dengan append dan kapasitas
+	sliceExample5 := make([]string, 3, 5)
+	sliceExample5[0] = "Alice"
+	sliceExample5[1] = "Bob"
+	sliceExample5[2] = "Charlie"
+	sliceExample5 = append(sliceExample5, "David")
+	fmt.Println(sliceExample5)
+	fmt.Println("==== Contoh dengan kapasitas ====")
+	fmt.Printf("Length: %d, Capacity: %d\n", len(sliceExample5), cap(sliceExample5))
 
-	fmt.Print("========================== \n")
-	fmt.Println(kelas)
-
-	fmt.Println("======================================")
-	s := make([]int, 0, 5)
-
-	s = append(s, 10)
-	s = append(s, 20)
-	s = append(s, 30)
-	s = append(s, 40)
-	s = append(s, 50)
-	s = append(s, 60)
-	fmt.Println(s)
-	fmt.Println(len(s), cap(s))
-
-	fmt.Println("=============================")
-	groups := []string{"A", "B", "C", "D", "E", "F"}
-	fmt.Println(groups)
-	groups = append(groups, "G", "H", "I", "J", "K")
-	fmt.Println(groups)
-
-	fmt.Println("==================")
-	result := make([]int, 0, 1000) // Preallocate capacity
-	for i := 0; i < 1000; i++ {
-		result = append(result, i) // Minimal reallocation
+	// Contoh jika slice diprint dengan for loop
+	for i, v := range sliceExample5 {
+		fmt.Printf("Index: %d, Value: %s\n", i, v)
 	}
+
+	// Contoh jika slice diprint dengan for loop tanpa index
+	for _, v := range sliceExample5 {
+		fmt.Printf("Value: %s\n", v)
+	}
+
+	// Contoh jika slice diprint dengan for loop tanpa value
+	for i := range sliceExample5 {
+		fmt.Printf("Index: %d\n", i)
+	}
+
 }
