@@ -1,0 +1,1 @@
+Pada section ini saya belajar Methods di Go
